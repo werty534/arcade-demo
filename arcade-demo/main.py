@@ -33,9 +33,10 @@ file_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(file_path)
 
 
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 1250
+HEIGHT = 730
 SPRITE_SCALING = 0.5
+collect_coin_sound = arcade.load_sound("/home/tomas/Downloads/Samsung notification sound effect ( no copyright).wav")
 
 class MenuView(arcade.View):
     def on_show(self):
@@ -43,9 +44,9 @@ class MenuView(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_text("Menu Screen", WIDTH / 2, HEIGHT / 2,
-                         arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Click to advance", WIDTH / 2, HEIGHT / 2 - 75,
+        arcade.draw_text("Albion Online es un mmorpg no lineal,  Explora un amplio mundo abierto con 5 biomas únicos, todo cuánto hagas tendrá su repercusión en el mundo, con la economía orientada al jugador de Albion, los jugadores crean prácticamente todo el equipo a partir de los recursos que consiguen, el equipo que llevas define quién eres, cambia de arma y armadura para pasar de caballero a mago, o juega como una mezcla de ambas clases. Aventúrate en el mundo abierto frente a los habitantes y las criaturas de Albion, inicia expediciones o adéntrate en mazmorras en las que encontrarás enemigos aún más difíciles, enfréntate a otros jugadores en encuentros en el mundo abierto, lucha por los territorios o por ciudades enteras en batallas tácticas, relájate en tu isla privada, donde podrás construir un hogar, cultivar cosechas y criar animales, únete a un gremio, todo es mejor cuando se trabaja en grupo. Adéntrate ya en el mundo de Albion y escribe tu propia historia. ", WIDTH / 2, HEIGHT / 2,
+                         arcade.color.BLACK, font_size=20, anchor_x="center")
+        arcade.draw_text("en el que escribes tu propia historia sin limitarte a seguir un camino prefijado.", WIDTH / 2, HEIGHT / 2 - 75,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
@@ -131,13 +132,16 @@ class GameView(arcade.View):
         # Loop through each colliding sprite, remove it, and add to the
         # score.
         for coin in hit_list:
+            arcade.play_sound(collect_coin_sound)
             coin.kill()
             self.score += 1
             self.window.total_score += 1
 
+
         # If we've collected all the games, then move to a "GAME_OVER"
         # state.
         if len(self.coin_list) == 0:
+            arcade.play_sound(arcade.load_sound("/home/tomas/Downloads/Clash Royale 'He He He Haw' Sound Effect [Original Audio] MEME SOUND EFFECT.wav"))
             game_over_view = GameOverView()
             game_over_view.time_taken = self.time_taken
             self.window.set_mouse_visible(True)
